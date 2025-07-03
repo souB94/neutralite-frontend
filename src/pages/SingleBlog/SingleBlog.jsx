@@ -52,7 +52,7 @@ function SingleBlog(){
         // that handles saving this data to your database.
         try {
             // Example of how you would send it to a backend:
-            /*
+            
             const response = await fetch(`${backendUrl}/api/comments`, { // <--- You need to define this backend endpoint
                 method: 'POST',
                 headers: {
@@ -72,7 +72,7 @@ function SingleBlog(){
             const result = await response.json();
             console.log('Comment posted successfully:', result);
             alert('Comment posted successfully!');
-            */
+            
 
             // For now, clear the form after logging
             setCommentData({ name: '', email: '', message: '' });
