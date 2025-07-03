@@ -12,7 +12,7 @@ function Checkout(){
     const navigate = useNavigate();
     const location = useLocation(); // Get location object to access passed state
 
-    const { cartItems } = useContext(CartContext);
+    const { cartItems, setCartItems } = useContext(CartContext);
     console.log("Current Cart Items from Context:", cartItems);
 
     // State to hold the items being checked out
