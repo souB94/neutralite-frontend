@@ -9,10 +9,12 @@ function BlogSection(){
     const isHomePage = location.pathname === '/';
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([]);
+
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     
 
     useEffect(() => {
-            fetch('http://localhost:5000/api/blogs')
+            fetch(`${backendUrl}/api/blogs`)
             .then(async res => {
                 if (!res.ok) {
                     const text = await res.text();
@@ -44,7 +46,7 @@ function BlogSection(){
                             <div key={blog._id} className="blog_item w-full md:w-[50%] lg:w-[33%] xl:w-[33%] px-3 mb-6">
                                 <div className='inner_content_wrapper'>
                                     <div className='blog_image_wrapper relative mb-5'>
-                                        <img className='w-full' src={blog.blogImage} alt="Blog Image" />
+                                        <img className='w-full' src={`${backendUrl}/uploads/${blog.blogImage}`} alt="Blog Image" />
                                         <div className='blog_date absolute top-5 right-5 text-center flex flex-col items-center justify-center w-[50px] h-[50px] bg-white'>
                                             <span className='day block text-lg font-medium leading-4 mb-2'>{blog.day}</span>
                                             <span className='month text-xs leading-3'>{blog.month}</span>
