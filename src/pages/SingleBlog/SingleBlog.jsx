@@ -307,7 +307,7 @@ function SingleBlog(){
                                                     ></textarea>
                                                 </div>
                                                 <div className="submit_btn_wrapper w-full mt-4">
-                                                    <button type="submit" className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold">
+                                                    <button type="submit" className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold" onClick={handleCommentSubmit}>
                                                         Post Comment
                                                     </button>
                                                 </div>
