@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocati
 
 function Checkout(){
 
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     const navigate = useNavigate();
     const location = useLocation(); // Get location object to access passed state
 
@@ -271,7 +273,7 @@ function Checkout(){
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/orders', {
+                const response = await fetch(`${backendUrl}/api/orders`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -673,7 +675,7 @@ function Checkout(){
                                         {checkoutItems.map((item) => (
                                             <div className="product_row flex items-center justify-start bg-white p-3 relative mb-2" key={item._id}>
                                                 <div className="product_img w-[70px] h-[70px] flex justify-center items-center bg-gray-200 mr-3 relative">
-                                                    <img className="max-w-1/2" src={item.imageUrl} alt={item.name} /> {/* Ensure item.imageUrl */}
+                                                    <img className="max-w-1/2" src={`${backendUrl}/uploads/${item.imageUrl}`} alt={item.name} /> {/* Ensure item.imageUrl */}
                                                     <div className="product_no absolute w-[20px] h-[20px] bg-cream-400 text-[12px] font-bold rounded-full flex items-center justify-center z-2 -top-1 -right-1 leading-4">{item.quantity}</div>
                                                 </div>
                                                 <div className="product_information w-[200px]">
