@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import InnerBanner from '../../components/InnerBanner/InnerBanner';
-// Use a more descriptive name for the default related blog image
-
 import DefaultRelatedBlogImage from '../../assets/images/blog/blog_big_img_1.png'; // Make sure this path is correct
 import Footer from "../../components/Footer/Footer";
 import { FaFacebookF, FaInstagram } from 'react-icons/fa';
@@ -19,7 +17,72 @@ function SingleBlog(){
     const { id } = useParams();
     const navigate = useNavigate();
 
+    // State for the comment form fields
+    const [commentData, setCommentData] = useState({
+        name: '',
+        email: '',
+        message: '',
+    });
+
     const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
+    // Handle input changes for the comment form
+    const handleCommentChange = (e) => {
+        const { name, value } = e.target;
+        setCommentData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    // Handle comment form submission
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        // You can add basic validation here if needed
+        if (!commentData.name || !commentData.email || !commentData.message) {
+            alert('Please fill in all comment fields.');
+            return;
+        }
+
+        console.log('Comment submitted:', commentData);
+
+        // TODO: Send commentData to your backend API for comments
+        // You'll need to create a new API endpoint on your backend (e.g., POST /api/comments)
+        // that handles saving this data to your database.
+        try {
+            // Example of how you would send it to a backend:
+            /*
+            const response = await fetch(`${backendUrl}/api/comments`, { // <--- You need to define this backend endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    blogId: id, // Pass the ID of the blog this comment belongs to
+                    ...commentData,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text(); // Get more details about the error
+                throw new Error(`Failed to post comment: ${response.status} ${response.statusText} - ${errorText}`);
+            }
+
+            const result = await response.json();
+            console.log('Comment posted successfully:', result);
+            alert('Comment posted successfully!');
+            */
+
+            // For now, clear the form after logging
+            setCommentData({ name: '', email: '', message: '' });
+            alert('Comment submitted (frontend only). Backend integration is pending!'); // Placeholder alert
+
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            alert(`Failed to post comment: ${error.message}`);
+        }
+    };
 
     // Effect to fetch the main blog
     useEffect(() => {
@@ -44,12 +107,11 @@ function SingleBlog(){
         };
 
         fetchBlog();
-    }, [id, navigate]); // Depend on 'id' to re-fetch when URL changes
+    }, [id, navigate, backendUrl]); // Depend on 'id', 'navigate', and 'backendUrl'
 
     // Effect to fetch related blogs once the main blog data is available
     useEffect(() => {
         const fetchRelatedBlogs = async () => {
-            // Debug: Check blog and category before fetch
             console.log('Checking blog for related fetch:', blog);
             if (!blog || !blog.category) {
                 console.log("Skipping related blog fetch: main blog or its category is not available yet.");
@@ -60,7 +122,6 @@ function SingleBlog(){
             setRelatedLoading(true);
             console.log(`Attempting to fetch related blogs for category: "${blog.category}", excluding ID: ${id}`);
             try {
-                // *** CRUCIAL CHANGE HERE: encodeURIComponent ***
                 const relatedApiUrl = `${backendUrl}/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
                 console.log('Related blogs API URL:', relatedApiUrl); // Debug: Related API URL
 
@@ -83,16 +144,15 @@ function SingleBlog(){
             }
         };
 
-        if (blog) { // Only attempt to fetch related blogs if the main blog data is loaded
+        if (blog) {
             fetchRelatedBlogs();
         }
-    }, [blog, id]); // Added relatedBlogs to dependencies to see final state change, though it might cause double log. Remove after debug.
+    }, [blog, id, backendUrl]);
 
 
     // Effect to fetch popular blogs once the main blog data is available
     useEffect(() => {
         const fetchPopularBlogs = async () => {
-            // Debug: Check blog and category before fetch
             console.log('Checking blog for popular fetch:', blog);
             if (!blog || !blog.category) {
                 console.log("Skipping popular blog fetch: main blog or its category is not available yet.");
@@ -103,7 +163,6 @@ function SingleBlog(){
             setPopularLoading(true);
             console.log(`Attempting to fetch popular blogs for category: "${blog.category}", excluding ID: ${id}`);
             try {
-                // *** CRUCIAL CHANGE HERE: encodeURIComponent ***
                 const popularApiUrl = `${backendUrl}/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
                 console.log('Popular blogs API URL:', popularApiUrl); // Debug: Popular API URL
 
@@ -126,14 +185,13 @@ function SingleBlog(){
             }
         };
 
-        if (blog) { // Only attempt to fetch popular blogs if the main blog data is loaded
+        if (blog) {
             fetchPopularBlogs();
         }
-    }, [blog, id]);
+    }, [blog, id, backendUrl]);
 
 
     // Debug: Watch relatedBlogs state change (outside useEffect for simpler observation)
-    // This will log every time relatedBlogs state updates.
     useEffect(() => {
         console.log('Current relatedBlogs state:', relatedBlogs);
         console.log('Current relatedLoading state:', relatedLoading);
@@ -193,7 +251,6 @@ function SingleBlog(){
                                 <div className="blog_description">
                                     <div className="blog_desc_header">
                                         <h2 className="text-black text-[35px] font-semibold mb-3 blog_title leading-12 mt-7">{blog.title}</h2>
-                                        {/* Ensure blog.date is available, assuming it comes from processed backend data */}
                                         <p className="blog_date text-[14px] tracking-widest text-brown-600">{blog.month} {blog.day}, {blog.year}</p>
                                     </div>
                                     <div className="blog_desc_content mt-5">
@@ -209,19 +266,48 @@ function SingleBlog(){
                                 <div className="comment_section border-t-1 border-gray-500 mt-8">
                                     <h2 className="text-black text-[35px] font-semibold mb-3 blog_title leading-12 mt-6">Leave A Comment</h2>
                                     <div className="comment_form_wrapper">
-                                        <form id="comment_form" className="bg-cream-400">
+                                        {/* MODIFIED FORM */}
+                                        <form id="comment_form" className="bg-cream-400" onSubmit={handleCommentSubmit}>
                                             <div className="form_inner_wrapper flex flex-wrap p-5 items-start justify-between">
                                                 <div className="form_group name w-[49%]">
-                                                    <input id="name" name="name" type="text" className="form_control py-3 px-5 bg-white w-full" placeholder="Name" autoComplete="on" />
+                                                    <input
+                                                        id="name"
+                                                        name="name"
+                                                        type="text"
+                                                        className="form_control py-3 px-5 bg-white w-full"
+                                                        placeholder="Name"
+                                                        autoComplete="on"
+                                                        value={commentData.name}
+                                                        onChange={handleCommentChange}
+                                                        required // Added for basic HTML validation
+                                                    />
                                                 </div>
                                                 <div className="form_group email w-[49%]">
-                                                    <input id="email" name="email" type="email" className="form_control py-3 px-5 bg-white w-full" placeholder="Email" autoComplete="on" />
+                                                    <input
+                                                        id="email"
+                                                        name="email"
+                                                        type="email"
+                                                        className="form_control py-3 px-5 bg-white w-full"
+                                                        placeholder="Email"
+                                                        autoComplete="on"
+                                                        value={commentData.email}
+                                                        onChange={handleCommentChange}
+                                                        required // Added for basic HTML validation
+                                                    />
                                                 </div>
                                                 <div className="form-group message w-full mt-5">
-                                                    <textarea name="mesage" id="message" className="form_control h-50 bg-white w-full py-3 px-5" placeholder="Your Comment"></textarea>
+                                                    <textarea
+                                                        name="message" // Corrected name attribute to 'message'
+                                                        id="message"
+                                                        className="form_control h-50 bg-white w-full py-3 px-5"
+                                                        placeholder="Your Comment"
+                                                        value={commentData.message}
+                                                        onChange={handleCommentChange}
+                                                        required // Added for basic HTML validation
+                                                    ></textarea>
                                                 </div>
                                                 <div className="submit_btn_wrapper w-full mt-4">
-                                                    <button className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold">
+                                                    <button type="submit" className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold">
                                                         Post Comment
                                                     </button>
                                                 </div>
@@ -272,7 +358,7 @@ function SingleBlog(){
                                     </div>
                                 </div>
 
-                                {/* Popular Topics and Popular Tags (unchanged, still hardcoded) */}
+                                {/* Popular Topics and Popular Tags */}
                                 <div className="popular_topics mb-8">
                                     <h2 className="text-black text-[25px] font-semibold mb-3 blog_title leading-12 mt-6 border-b-1 border-gray-300 pb-1">Popular Topics</h2>
                                     <div className="related_topic_list">
