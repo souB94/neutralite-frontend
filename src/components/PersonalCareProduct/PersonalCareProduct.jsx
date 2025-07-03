@@ -6,6 +6,8 @@ import { useWishlist } from '../../context/WishlistContext';
 
 function PersonalCareProduct() {
 
+   
+
     const [products, setProducts] = useState([]);
     const { cartItems, setCartItems } = useCart(); // Access cart items from context
     const { wishlistItems, setWishlistItems } = useWishlist(); // Access wishlist items from context

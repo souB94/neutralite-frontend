@@ -8,7 +8,8 @@ function Minicart() {
     const { cartItems, setCartItems } = useCart();
     const { wishlistItems } = useWishlist();
 
-    
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     const navigate = useNavigate();
     const handleWishlist = () =>{
         navigate('/wishlist');
@@ -134,7 +135,7 @@ function Minicart() {
                             <div className="cart_item flex items-center justify-between p-2 bg-white border-1 border-gray-200 mb-2 relative" key={item._id}>
                                 <div className="cart_item_info flex items-center gap-3 relative">
                                     <div className='cart_item_image_wrappper'>
-                                        <img src={item.imageUrl} alt={item.name} className='w-[60px] object-cover' />
+                                        <img src={`${backendUrl}/uploads/${item.imageUrl}`} alt={item.name} className='w-[60px] object-cover' />
                                     </div>
                                     <div className="cart_item_details">
                                         <h4 className="text-[17px] font-semibold mb-1">{item.name}</h4>
