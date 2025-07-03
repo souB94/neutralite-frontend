@@ -1,0 +1,4 @@
+.weekend_offer_block{background: url('../../assets/images/weekend_offer_bg.png') no-repeat; background-size: cover;background-position: center;background-attachment: fixed;}
+.weekend_offer_box{position: relative;}
+.weekend_offer_box::before{position: absolute; content: ''; left: 15px;top:15px; width: 130px;height: 130px;border-left:1.5px solid #000;border-top: 1.5px solid #000;pointer-events: none;}
+.weekend_offer_box::after{position: absolute; content: ''; right: 15px;bottom: 15px; width: 130px;height: 130px;border-bottom:1.5px solid #000;border-right: 1.5px solid #000;pointer-events: none;}

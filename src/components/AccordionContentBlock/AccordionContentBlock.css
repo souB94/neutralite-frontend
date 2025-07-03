@@ -1,0 +1,7 @@
+.accordion_item{border-bottom: 1px solid #c2c2c2;cursor:pointer}
+.accordion_item .accordion_header{transition: 0.5s ease-out;}
+.accordion_item.active .accordion_header{background: var(--bg-cream-400);}
+.accordion_item .accordion_description{transition: max-height 0.45s ease-out;max-height: 0;overflow: hidden;}
+.accordion_item.active .accordion_description{max-height: 250px;transition: max-height 0.25s ease-in;}
+.accordion_item .icon_wrapper{transition:0.3s ease-out}
+.accordion_item.active .icon_wrapper:last-of-type{transform: rotate(180deg);}

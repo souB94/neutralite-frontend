@@ -1,0 +1,4 @@
+.blog_btn{transition:0.3s ease;}
+.blog_btn > span{transition: 0.5s ease-out;}
+.blog_btn:hover{color:var(--text-white);background:var(--bg-black)}
+.blog_btn:hover > span{transform: rotate(360deg);}

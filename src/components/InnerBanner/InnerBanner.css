@@ -1,0 +1,2 @@
+.inner_banner{height: 350px;position: relative;background: url('../../assets/images/inner_banner_bg.png');background-size: cover;background-position: center;overflow: hidden;z-index: 1;}
+.inner_banner::before{position: absolute;content:'';left:0;top:0;width:100%;height: 100%;background: #3D2F22;opacity: 0.75;z-index: -1;}

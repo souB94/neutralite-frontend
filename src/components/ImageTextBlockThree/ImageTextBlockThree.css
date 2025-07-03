@@ -1,0 +1,2 @@
+.about_feat_list li{position: relative;padding-left:20px}
+.about_feat_list li::before{position: absolute;content: '';left:0px;top:5px;width:10px;height:10px;background: url('../../assets/images/about/bullet.png') no-repeat;background-size: 8px;background-position: center;}

@@ -1,0 +1,12 @@
+.feature_bar_wrapper{background: var(--bg-cream-100);}
+.business_timing::before{
+    position: absolute;
+    content: '';
+    left: -23px;
+    top: 5px;
+    width: 205px;
+    height: 252px;
+    background: url(/src/assets/images/about/leaf_vector_2.png) no-repeat;
+    background-size: 208px;
+    background-position: center;
+}

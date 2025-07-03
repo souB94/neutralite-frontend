@@ -1,0 +1,13 @@
+.product_box .floating_wishlist_cart_icon_group{top:20px;right:-50px;transition: 0.3s ease;;}
+.product_box:hover .floating_wishlist_cart_icon_group{right:20px;}
+.product_box .floating_wishlist_cart_icon_group .wishlist_icon{transition:0.3s ease;}
+.product_box .floating_wishlist_cart_icon_group .wishlist_icon:hover{background: var(--bg-gray-2);color: var(--text-white);}
+.product_box .floating_wishlist_cart_icon_group .cart_icon:hover{transition:0.3s ease;}
+.product_box .floating_wishlist_cart_icon_group .cart_icon:hover{background: var(--bg-gray-2);color: var(--text-white);}
+
+.product_box .buy_now_btn{position: absolute; width:85%; left:50%; top:auto; bottom:-50px; transform:translateX(-50%);transition: 0.3s ease;}
+.product_box .buy_now_btn:hover{background: var(--bg-gray-2);color: var(--text-white); }
+.product_box:hover .buy_now_btn{bottom:20px}
+
+ .floating_wishlist_cart_icon_group .cart_icon.added_to_cart{background: var(--bg-brown-600);color:white;}
+ .floating_wishlist_cart_icon_group .wishlist_icon.added_to_wishlist{background: var(--bg-brown-600);color:white;}

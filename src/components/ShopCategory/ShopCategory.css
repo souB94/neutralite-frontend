@@ -1,0 +1,2 @@
+.product_category_box img{transition: 0.3s ease;}
+.product_category_box:hover img{transform: scale(1.125);}

@@ -1,0 +1,2 @@
+.blog_link::after{position: absolute;content:'';left: 0; bottom: -6px;height: 2px;width: 100%;background: var(--bg-black);transition: 0.3s ease-out;}
+.blog_link:hover::after{width: 50%;}

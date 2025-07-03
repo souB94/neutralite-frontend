@@ -1,0 +1,10 @@
+.conscent_box input  {cursor: pointer;opacity: 0;}
+.conscent_box label{font-family: var(--font-urbanist);position: relative;}
+.conscent_box label::before{position:absolute;content:'';left:-19px;top:4px;width:15px;height:15px;background: #fff;pointer-events: none;border:1px solid var(--bg-black)}
+.conscent_box label::after{position:absolute;content:'';left:-17px;top:8px;width:10px;height:5px;pointer-events: none;border-left:2px solid var(--bg-black);border-bottom: 2px solid var(--bg-black);transform: rotate(-45deg);opacity: 0;}
+
+.conscent_box input:checked + label::after{opacity: 1;}
+
+.order_summary_wrapper .product_row_wrapper {height: 196px;overflow-y: auto;}
+
+.product_row_wrapper .product_row:last-child {margin-bottom: 0;}

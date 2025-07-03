@@ -1,0 +1,41 @@
+.filter_options .options input  {cursor: pointer;opacity: 0;}
+.filter_options .options label p{font-family: var(--font-urbanist);position: relative;}
+.filter_options .options label p::before{position:absolute;content:'';left:-23px;top:4px;width:15px;height:15px;background: #fff;pointer-events: none;border:1px solid var(--bg-black)}
+.filter_options .options label p::after{position:absolute;content:'';left:-20px;top:8px;width:10px;height:5px;pointer-events: none;border-left:2px solid var(--bg-black);border-bottom: 2px solid var(--bg-black);transform: rotate(-45deg);opacity: 0;}
+
+.filter_options .options input:checked + p::after{opacity: 1;}
+
+.option_content{
+    max-height:0px;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+.show_options .option_content{
+    max-height: 500px; /* OR a sufficiently large value like 9999px */
+    transition: max-height 0.25s ease-in;
+    /* You might need to adjust this value (500px) based on the maximum expected height of your filter options.
+       A very large value like 9999px is often used to ensure it always covers the content's full height. */
+}
+
+.filter_options h4{border-bottom: 0px solid transparent;transition: 0.3s ease;}
+.filter_options h4 .icon_wrapper{transition: 0.3s ease;transform: rotate(180deg);}
+.show_options  h4{border-color: var(--bg-black);}
+.show_options h4 .icon_wrapper{transform: rotate(180deg);}
+
+.product_box .floating_wishlist_cart_icon_group{top:20px;right:-50px;transition: 0.3s ease;;}
+.product_box:hover .floating_wishlist_cart_icon_group{right:20px;}
+.product_box .floating_wishlist_cart_icon_group .wishlist_icon{transition:0.3s ease;}
+.product_box .floating_wishlist_cart_icon_group .wishlist_icon:hover{background: var(--bg-gray-2);color: var(--text-white);}
+.product_box .floating_wishlist_cart_icon_group .cart_icon:hover{transition:0.3s ease;}
+.product_box .floating_wishlist_cart_icon_group .cart_icon:hover{background: var(--bg-gray-2);color: var(--text-white);}
+
+.product_box .buy_now_btn{position: absolute; width:85%; left:50%; top:auto; bottom:-50px; transform:translateX(-50%);transition: 0.3s ease;}
+.product_box .buy_now_btn:hover{background: var(--bg-gray-2);color: var(--text-white); }
+.product_box:hover .buy_now_btn{bottom:20px}
+
+.best_seller_product_slider .swiper-button-prev{left: 5px;}
+.best_seller_product_slider .swiper-button-next{right: 5px;}
+
+.product_list_section .product_area .product_row {margin: 0 -7px;}
+.filter_block_header .icon_wrapper{display: none;}
+.toggle_icon{display: none;}
