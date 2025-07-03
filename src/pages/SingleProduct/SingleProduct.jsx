@@ -219,7 +219,7 @@ function ProductDetails() {
                                     <div className="product_preview mx-auto">
                                         <img
                                             className="w-full h-auto max-w-[500px] object-contain"
-                                            src={product.imageUrl}
+                                            src={`${backendUrl}/uploads/${product.imageUrl}`}
                                             alt={product.name || 'Product Image'}
                                             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x700/E0E0E0/808080?text=Image+Not+Found'; }}
                                         />
