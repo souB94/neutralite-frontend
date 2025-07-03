@@ -70,13 +70,13 @@ function SingleBlog(){
             }
 
             const result = await response.json();
-            console.log('Comment posted successfully:', result);
-            alert('Comment posted successfully!');
+           /* console.log('Comment posted successfully:', result);
+            alert('Comment posted successfully!');*/
             
 
             // For now, clear the form after logging
             setCommentData({ name: '', email: '', message: '' });
-            alert('Comment submitted (frontend only). Backend integration is pending!'); // Placeholder alert
+            /*alert('Comment submitted (frontend only). Backend integration is pending!'); // Placeholder alert*/
 
         } catch (error) {
             console.error('Error posting comment:', error);
