@@ -19,13 +19,15 @@ function SingleBlog(){
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     // Effect to fetch the main blog
     useEffect(() => {
         const fetchBlog = async () => {
             console.log('Fetching main blog with ID:', id); // Debug: Main blog fetch start
             setLoading(true);
             try {
-                const response = await fetch(`http://localhost:5000/api/blogs/${id}`);
+                const response = await fetch(`${backendUrl}/api/blogs/${id}`);
                 console.log('Main blog fetch response status:', response.status); // Debug: Main blog response status
                 if (!response.ok) {
                     throw new Error('Failed to fetch blog');
@@ -59,7 +61,7 @@ function SingleBlog(){
             console.log(`Attempting to fetch related blogs for category: "${blog.category}", excluding ID: ${id}`);
             try {
                 // *** CRUCIAL CHANGE HERE: encodeURIComponent ***
-                const relatedApiUrl = `http://localhost:5000/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
+                const relatedApiUrl = `${backendUrl}/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
                 console.log('Related blogs API URL:', relatedApiUrl); // Debug: Related API URL
 
                 const response = await fetch(relatedApiUrl);
@@ -102,7 +104,7 @@ function SingleBlog(){
             console.log(`Attempting to fetch popular blogs for category: "${blog.category}", excluding ID: ${id}`);
             try {
                 // *** CRUCIAL CHANGE HERE: encodeURIComponent ***
-                const popularApiUrl = `http://localhost:5000/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
+                const popularApiUrl = `${backendUrl}/api/blogs?category=${encodeURIComponent(blog.category)}&exclude=${id}&limit=2`;
                 console.log('Popular blogs API URL:', popularApiUrl); // Debug: Popular API URL
 
                 const response = await fetch(popularApiUrl);
@@ -186,7 +188,7 @@ function SingleBlog(){
                         <div className="section_content_wrapper flex flex-wrap items-start justify-between">
                             <div className="content_wrapper left w-[65%]">
                                 <div className="single_blog_image">
-                                    <img className="w-full" src={blog.blogImage || DefaultRelatedBlogImage} alt="Blog Details Image" />
+                                    <img className="w-full" src={`${backendUrl}/uploads/${blog.blogImage}`} alt="Blog Details Image" />
                                 </div>
                                 <div className="blog_description">
                                     <div className="blog_desc_header">
@@ -250,7 +252,7 @@ function SingleBlog(){
                                                     <div className="image_wrapper w-[108px] h-[108px] overflow-hidden mr-3">
                                                         <img
                                                             className="w-full h-full object-cover"
-                                                            src={rb.blogImage || DefaultRelatedBlogImage}
+                                                            src={`${backendUrl}/uploads/${rb.blogImage}` || DefaultRelatedBlogImage}
                                                             alt={rb.title || "Related Blog Image"}
                                                         />
                                                     </div>
@@ -286,7 +288,7 @@ function SingleBlog(){
                                                     <div className="image_wrapper w-[108px] h-[108px] overflow-hidden mr-3">
                                                         <img
                                                             className="w-full h-full object-cover"
-                                                            src={pb.blogImage || DefaultRelatedBlogImage}
+                                                            src={`${backendUrl}/uploads/${pb.blogImage}` || DefaultRelatedBlogImage}
                                                             alt={pb.title || "Related Blog Image"}
                                                         />
                                                     </div>
