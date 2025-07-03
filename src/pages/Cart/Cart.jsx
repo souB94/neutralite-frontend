@@ -13,6 +13,8 @@ function CartPage() { // Renamed component to CartPage for consistency and clari
 
     const navigate = useNavigate();
 
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     // Functions to handle quantity changes and item removal (same as in Minicart)
     const increaseItemQuantity = (id) => {
         setCartItems(
@@ -95,7 +97,7 @@ function CartPage() { // Renamed component to CartPage for consistency and clari
                                             {/* Product Info */}
                                             <div className="flex gap-4 items-center product_info">
                                                 {/* Use item.imageUrl for the image source */}
-                                                <img src={item.imageUrl || CartImageTwo} alt={item.name} className="w-20 h-20 object-contain" />
+                                                <img src={`${backendUrl}/uploads/${item.imageUrl}` || CartImageTwo} alt={item.name} className="w-20 h-20 object-contain" />
                                                 <div className="text-sm space-y-1">
                                                     <h3 className="font-semibold">{item.name}</h3>
                                                     {/* Display additional item details if available */}

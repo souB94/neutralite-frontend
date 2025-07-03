@@ -10,6 +10,8 @@ import { useWishlist } from '../../context/WishlistContext'; // Correct import p
 
 function Wishlist(){
 
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     const { wishlistItems, setWishlistItems } = useWishlist();
     const { setCartItems, cartItems } = useCart(); // Destructure cartItems as well for "Add to Cart" logic
 
@@ -77,7 +79,7 @@ function Wishlist(){
                                             <tr key={item._id}>
                                                 <td className="w-[20%] p-4">
                                                     {/* Use item.imageUrl if available, otherwise fallback */}
-                                                    <img className="w-1/4 mx-auto" src={item.imageUrl || ProductImageTwo} alt={item.name} />
+                                                    <img className="w-1/4 mx-auto" src={`${backendUrl}/uploads/${item.imageUrl}` || ProductImageTwo} alt={item.name} />
                                                 </td>
                                                 <td className="w-[20%]">
                                                     <h4 className="text-[17px] mb-2">{item.name}</h4>
