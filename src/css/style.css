@@ -257,8 +257,7 @@ body{font-family: 'Roboto', sans-serif;overflow-x: hidden;position: relative;}
     .product_list_section .product_area .product_row {margin: 0 -5px;}
     .top_sort_bar .inner_content_wrapper{flex-direction: column;gap: 15px 0px;}
     #blog .blog_row .blog_box{width: 100%;}
-    .shopping_cart_wrapper{width: 350px;}
-    .shopping_cart_wrapper.showCart{left: -150px;}
+   
     .product_var_tab{width: 60px;}
     .product_var_tab .product_var_box{width: 60px;height: 60px;}
     .product_var_tab .product_var_box img{width:30px;}
@@ -271,6 +270,10 @@ body{font-family: 'Roboto', sans-serif;overflow-x: hidden;position: relative;}
     .comment_section h2{font-size:30px;}
     #comment_form .form_inner_wrapper .name{width: 100%;margin-bottom: 20px;}
     #comment_form .form_inner_wrapper .email{width: 100%;}
+
+    .minicart_icon{position: static;}
+    .shopping_cart_wrapper{width: 350px;top:-50px;left: 50%;transform: translateX(-50%);top: -50px;}
+    .shopping_cart_wrapper.showCart{top: 50px;left: 50%;transform: translateX(-50%);}
 }
 
 @media(max-width:426px){
@@ -296,13 +299,17 @@ body{font-family: 'Roboto', sans-serif;overflow-x: hidden;position: relative;}
     .contact_us_section .section_content_wrapper .content_wrapper{text-align: center;}
     .contact_list li a{flex-direction: column;gap: 15px 0;} 
     .contact_list li a .text_wrapper{margin-left: 0;}
-    .shopping_cart_wrapper{left: -110px;}
-    .shopping_cart_wrapper.showCart{left: -110px;}
+   
     .product_information_block button {font-size: 10px;}
-    .nav_search_form {left: -70px;transform: translateX(-50%);width: 350px;}
-    .nav_search_form.showForm{left: -70px;}
+    .nav_search_form {left: 50%;transform: translateX(-66%);width: 350px;}
+    .nav_search_form.showForm{left: 50%;transform: translateX(-66%);}
     .shopping_cart_details_wrapper .section_header h2{font-size: 20px;}
     .shopping_cart_details_wrapper .section_header button{font-size: 12px;}
+
+}
+
+@media(max-width:390px){
+
 
 }
 
@@ -313,13 +320,20 @@ body{font-family: 'Roboto', sans-serif;overflow-x: hidden;position: relative;}
     .shopping_cart_wrapper {width: 320px;}
     .banner_content h1{font-size: 35px;}
     .conscent_box label{font-size: 15px;}
+    .nav_search_form {
+        left: 50%;
+        transform: translateX(-62%);
+        width: 320px;
+    }
+    .cart_item_details h4{font-size: 14px;}
+   
     
 }
 
 @media(max-width:361px){
-        .nav_search_form {
-            left: -64px;
-            transform: translateX(-50%);
-            width: 320px;
-        }
+    .nav_search_form {
+        left: 50%;
+        transform: translateX(-62%);
+        width: 320px;
+    }
 }
