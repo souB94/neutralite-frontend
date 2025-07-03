@@ -20,6 +20,8 @@ function ProductCategory() {
     const [loadingAllProducts, setLoadingAllProducts] = useState(true);
     const [errorAllProducts, setErrorAllProducts] = useState(null);
 
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     const { cartItems, setCartItems } = useCart(); // Access cart items from context
     const { wishlistItems, setWishlistItems } = useWishlist(); // Access wishlist items from context
 
@@ -123,11 +125,11 @@ function ProductCategory() {
         const fetchAllProducts = async () => {
             try {
                 setLoadingAllProducts(true);
-                const responseProducts = await fetch('http://localhost:5000/api/products');
+                const responseProducts = await fetch(`${backendUrl}/api/products`);
                 if (!responseProducts.ok) throw new Error(`HTTP error! Status: ${responseProducts.status} for general products`);
                 const generalProductsData = await responseProducts.json();
 
-                const responsePersonalCare = await fetch('http://localhost:5000/api/personalProducts');
+                const responsePersonalCare = await fetch(`${backendUrl}/api/personalProducts`);
                 if (!responsePersonalCare.ok) throw new Error(`HTTP error! Status: ${responsePersonalCare.status} for personal care products`);
                 const personalCareProductsData = await responsePersonalCare.json();
 
@@ -191,7 +193,7 @@ function ProductCategory() {
         const fetchBestSellers = async () => {
             try {
                 setLoadingBestSellers(true);
-                const response = await fetch('http://localhost:5000/api/bestSellers');
+                const response = await fetch(`${backendUrl}/api/bestSellers`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -215,7 +217,7 @@ function ProductCategory() {
         const fetchFilterOptions = async () => {
             try {
                 setLoadingFilters(true);
-                const response = await fetch('http://localhost:5000/api/filters');
+                const response = await fetch(`${backendUrl}/api/filters`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -264,7 +266,7 @@ function ProductCategory() {
                     <div className='product_img_box flex items-center justify-center w-full h-full'>
                         <img
                             className='w-full h-full object-cover rounded-lg'
-                            src={product.imageUrl}
+                            src={`${backendUrl}/uploads/${product.imageUrl}`}
                             alt={product.name || 'Product Image'}
                             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/300x445/E0E0E0/808080?text=Image+Not+Found'; }}
                         />
@@ -440,7 +442,7 @@ function ProductCategory() {
                                                                 <div className='product_img_box flex items-center justify-center'>
                                                                     <img
                                                                         className='w-[200px] h-[300px] object-cover'
-                                                                        src={product.imageUrl}
+                                                                        src={`${backendUrl}/uploads/${product.imageUrl}`}
                                                                         alt={product.name || 'Product Image'}
                                                                         onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x300/E0E0E0/808080?text=Image+Not+Found'; }}
                                                                     />
