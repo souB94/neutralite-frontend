@@ -119,7 +119,7 @@ function topBrands() {
                                     <a href={`/product-details/${product._id}`} className="product_box w-1/3 p-5" key={product._id} id={product._id}>
                                         <div className="product_img_wrapper bg-white border-1 border-gray-200 relative overflow-hidden">
                                             <div className='product_img_box flex item-center justify-center'>
-                                                <img className='w-[300px] h-[445px]' src={product.imageUrl} alt={product.name} />
+                                                <img className='w-[300px] h-[445px]' src={`${import.meta.env.VITE_APP_BACKEND_URL}/uploads/top_brands/${product.imageUrl}`} alt={product.name} />
                                             </div>
                                             <div className='floating_wishlist_cart_icon_group absolute'>
                                                 <div className={wishlistBoxClasses} onClick={(e) => {
