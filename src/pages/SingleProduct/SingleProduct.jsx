@@ -13,6 +13,9 @@ import { FaXTwitter } from 'react-icons/fa6';
 import './SingleProduct.css'; // Assuming this CSS file exists for styling
 
 function ProductDetails() {
+
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+
     const { id } = useParams(); // Get the product ID from the URL parameters
     const navigate = useNavigate();
 
@@ -91,7 +94,7 @@ function ProductDetails() {
 
             // Try fetching from the general products API first
             try {
-                const response = await fetch(`http://localhost:5000/api/products/${id}`);
+                const response = await fetch(`${backendUrl}/api/products/${id}`);
                 if (response.ok) {
                     fetchedProduct = await response.json();
                 } else if (response.status !== 404) { // Only throw error if it's not a 404 (product not found)
@@ -105,7 +108,7 @@ function ProductDetails() {
             // If not found in general products, try fetching from personal care products API
             if (!fetchedProduct) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/personalProducts/${id}`); // Note 'personalProducts'
+                    const response = await fetch(`${backendUrl}/api/personalProducts/${id}`); // Note 'personalProducts'
                     if (response.ok) {
                         fetchedProduct = await response.json();
                     } else if (response.status !== 404) {
@@ -120,7 +123,7 @@ function ProductDetails() {
             // If not found in Best Seller products, try fetching from best seller products API
             if (!fetchedProduct) {
                 try {
-                    const response = await fetch(`http://localhost:5000/api/bestSellers/${id}`); // Note 'bestSellers'
+                    const response = await fetch(`${backendUrl}/api/bestSellers/${id}`); // Note 'bestSellers'
                     if (response.ok) {
                         fetchedProduct = await response.json();
                     } else if (response.status !== 404) {
