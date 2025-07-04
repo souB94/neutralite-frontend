@@ -133,8 +133,12 @@ function ProductCategory() {
                 if (!responsePersonalCare.ok) throw new Error(`HTTP error! Status: ${responsePersonalCare.status} for personal care products`);
                 const personalCareProductsData = await responsePersonalCare.json();
 
-                setAllProducts([...generalProductsData, ...personalCareProductsData]);
-                console.log("Fetched All Products (Combined):", [...generalProductsData, ...personalCareProductsData]);
+                const responseShopCategory = await fetch(`${backendUrl}/api/shopCategories`);
+                if (!responseShopCategory.ok) throw new Error(`HTTP error! Status: ${responseShopCategory.status} for shop category products`);
+                const shopCategoryProductsData = await responseShopCategory.json();
+
+                setAllProducts([...generalProductsData, ...personalCareProductsData, ...shopCategoryProductsData]);
+                console.log("Fetched All Products (Combined):", [...generalProductsData, ...personalCareProductsData, ...shopCategoryProductsData]);
             } catch (err) {
                 console.error('Fetch All Products error:', err);
                 setErrorAllProducts(err);
@@ -260,7 +264,7 @@ function ProductCategory() {
                 key={product._id}
             >
                 <div
-                    className="product_img_wrapper bg-white border-1 border-gray-200 relative overflow-hidden rounded-lg shadow-md w-full max-w-[300px] h-[445px] flex items-center justify-center cursor-pointer"
+                    className="product_img_wrapper bg-white border-1 border-gray-200 relative overflow-hidden  shadow-md w-full max-w-[300px] h-[445px] flex items-center justify-center cursor-pointer"
                     onClick={() => handleViewProductDetails(product._id)}
                 >
                     <div className='product_img_box flex items-center justify-center w-full h-full'>

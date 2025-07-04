@@ -1,17 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// Remove these local image imports as you'll be using URLs from the backend
-// import BodyLotionImage from '../../assets/images/products/category/body_lotion.png';
-// import MoisturizerImage from '../../assets/images/products/category/moisturizer.png';
-// import FaceCreamImage from '../../assets/images/products/category/face_cream.png';
-// import TeethWhitnerImage from '../../assets/images/products/category/teeth_whitner.png';
-// import BathingSaltImage from '../../assets/images/products/category/bathing_salt.png'
+
 import './ShopCategory.css';
 
 function ShopCategory() {
     const [ProductCategory, setProductCategory] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
     const [error, setError] = useState(null); // Add error state
+
+    var backendUrl = import.meta.env.VITE_APP_BACKEND_URL; // 👈 backend URL, ensure this matches your backend server
 
     const navigate = useNavigate();
     const handleViewProduct = () => {
@@ -22,7 +19,7 @@ function ShopCategory() {
         const fetchProductCategories = async () => {
             try {
                 setLoading(true); // Start loading
-                const response = await fetch('http://localhost:5000/api/shopCategories'); // 👈 backend API URL
+                const response = await fetch(`${backendUrl}/api/shopCategories`); // 👈 backend API URL
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -112,7 +109,7 @@ function ShopCategory() {
                             {leftColumn.map((product) => (
                                 <div key={product._id} className="product_category_box relative overflow-hidden w-[48%] cursor-pointer" onClick={handleViewProduct}>
                                     {/* Use product.image (which is the URL from backend) */}
-                                    <img className="w-full h-full object-cover" src={product.image} alt={product.name} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x300?text=Image+Not+Found'; }} />
+                                    <img className="w-full h-full object-cover" src={`${backendUrl}/uploads/${product.image}`} alt={product.name} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x300?text=Image+Not+Found'; }} />
                                     <div className="floating_text absolute left-10 bottom-10 w-70 z-2">
                                         <h6 className="text-[12px] uppercase text-black tracking-widest">{product.category}</h6>
                                         {/* Use product.name for the title */}
@@ -127,7 +124,7 @@ function ShopCategory() {
                             {rightColumn.map((product) => (
                                 <div key={product._id} className="product_category_box relative overflow-hidden w-[100%] cursor-pointer" onClick={handleViewProduct}>
                                     {/* Use product.image (which is the URL from backend) */}
-                                    <img className="w-full h-full object-cover object-left" src={product.image} alt={product.name} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x600?text=Image+Not+Found'; }} />
+                                    <img className="w-full h-full object-cover object-left" src={`${backendUrl}/uploads/${product.image}`} alt={product.name} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x600?text=Image+Not+Found'; }} />
                                     <div className="floating_text absolute left-10 bottom-10 w-70 z-2">
                                         <h6 className="text-[12px] uppercase text-black tracking-widest">{product.category}</h6>
                                         {/* Use product.name for the title */}

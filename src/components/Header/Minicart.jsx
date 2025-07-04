@@ -179,8 +179,8 @@ function Minicart() {
                     </div>
                     <p className="text-[14px] font-roboto text-gray-600 mt-2">Taxes and shipping calculated at checkout</p>
                     <div className='btn_grp border-t-1 pt-4 mt-4'>
-                        <button className='btn_view_cart w-full py-2 bg-black text-white font-urbanist hover:bg-gray-800 transition-colors duration-300 cursor-pointer mb-2' onClick={handleCart}>View Cart</button>
-                        <button className='btn_checkout w-full py-2 bg-brown-600 text-white font-urbanist hover:bg-amber-600 transition-colors duration-300 cursor-pointer' onClick={handleCheckout}>Checkout</button>
+                        <button className='btn_view_cart w-full py-2 bg-black text-white font-urbanist hover:bg-gray-800 transition-colors duration-300 cursor-pointer mb-2' onClick={() => { handleCart(); closeMiniCart(); }}>View Cart</button>
+                        <button className='btn_checkout w-full py-2 bg-brown-600 text-white font-urbanist hover:bg-amber-600 transition-colors duration-300 cursor-pointer' onClick={() => { handleCheckout(); closeMiniCart(); }}>Checkout</button>
                     </div>
                 </div>
             </div>
