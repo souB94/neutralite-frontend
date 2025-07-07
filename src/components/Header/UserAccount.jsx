@@ -1,11 +1,11 @@
 // src/components/UserAccountControl/UserAccountControl.js
-import React, { useState, useEffect } from 'react'; // Import useState
+import React, { useState, useEffect, useContext } from 'react'; // Import useState
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 function UserAccountControl() {
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
+    const { user, logout } =  useContext(AuthContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false); // New state to control menu visibility
 
      // Add this useEffect to see user changes
@@ -57,7 +57,7 @@ function UserAccountControl() {
                                     </Link>
                                 </li>
                                 <li className="sign_up w-full">
-                                    <Link to="/register" onClick={toggleMenu} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white">
+                                    <Link to="/signup" onClick={toggleMenu} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white">
                                         <span className="fi fi-rr-user-add mr-2"></span>Sign Up
                                     </Link>
                                 </li>

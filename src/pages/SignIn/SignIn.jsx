@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import InnerBanner from '../../components/InnerBanner/InnerBanner';
 import Footer from "../../components/Footer/Footer";
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Import useAuth hook
+import { useContext } from 'react'; // Make sure you import useContext
+import { AuthContext } from '../../context/AuthContext'; // Import useAuth hook
 
 function SignIn (){
 
     const navigate = useNavigate();
-    const { login } = useAuth(); // Get the login function from context
+     const { login } = useContext(AuthContext); // Get the login function from context
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -79,6 +80,7 @@ function SignIn (){
 
             if (response.ok) {
                 setMessage('Login successful! Redirecting...');
+                login(data);
                 setTimeout(() => {
                     navigate('/dashboard'); // Redirect to home page after successful login
                 }, 2000);
