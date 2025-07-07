@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import InnerBanner from '../../components/InnerBanner/InnerBanner';
 import Footer from "../../components/Footer/Footer";
-import { useAuth } from '../../context/AuthContext'; // Import useAuth hook
+import {AuthContext } from '../../context/AuthContext'; // Import useAuth hook
 
 function CreateAccount() {
     const navigate = useNavigate();
-    const { login } = useAuth(); // Get the login function from context 
+    const { login } = useContext(AuthContext); // Get the login function from context 
     const [formData, setFormData] = useState({
         name: '',
         email: '',

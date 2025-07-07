@@ -1,9 +1,9 @@
 // src/screens/DashboardScreen.js
-import React from 'react';
-import { useAuth } from '../../context/AuthContext'; // To display user info
+import React, {useContext} from 'react';
+import { AuthContext } from '../../context/AuthContext'; // To display user info
 
 function Dashboard() {
-  const { user } = useAuth(); // Access user from context
+  const { user } = useContext(AuthContext); // Access user from context
 
   return (
     <div>
