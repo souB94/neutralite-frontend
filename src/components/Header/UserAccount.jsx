@@ -21,7 +21,9 @@ function UserAccountControl() {
 
     const handleLogout = () => {
         logout();
-        navigate('/'); // Redirect to home page or login page after logout
+       setTimeout(() => {
+            navigate('/signin'); // Use the correct route name if it's /signin as per your Link
+        }); // Redirect to home page or login page after logout
         setIsMenuOpen(false); // Close the menu after logout
     };
 
@@ -35,7 +37,7 @@ function UserAccountControl() {
             {/* Conditionally render the dropdown menu based on isMenuOpen state */}
             {isMenuOpen && (
                 <div className="user_account_control absolute flex items-center gap-4">
-                    <ul className="flex items-center flex-col justify-start border-1 border-gray-300 w-[100px] bg-cream-100">
+                    <ul className="flex items-center flex-col justify-start border-1 border-gray-300 w-[150px] bg-cream-100">
                         {user ? ( // Conditionally render based on 'user' state
                             <>
                                 <li className="my_account w-full">
@@ -44,9 +46,9 @@ function UserAccountControl() {
                                     </Link>
                                 </li>
                                 <li className="sign_out w-full">
-                                    <a onClick={handleLogout} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white cursor-pointer">
-                                        <span className="fi fi-rr-sign-out mr-2"></span>Sign Out
-                                    </a>
+                                    <Link onClick={handleLogout} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white cursor-pointer">
+                                        <span className="fi fi-rr-exit mr-2"></span>Sign Out
+                                    </Link>
                                 </li>
                             </>
                         ) : (

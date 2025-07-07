@@ -124,7 +124,7 @@ function SignIn (){
                                             <input id="password" name="password" type="password" className="form_control py-3 px-5 bg-cream-100 border-1 border-gray-300 w-full" placeholder="Password" value={formData.password} onChange={handleInputChange} />
                                             {errors.password && <p className="text-red-500 text-xs italic mt-1">{errors.password}</p>}
                                         </div>
-                                        <div className="end_note text-gray text-[15px] text-left mt-5"><a href="/resetPassword" className="text-black underline">Forgot Your Password? </a> </div>
+                                        <div className="end_note text-gray text-[15px] text-left mt-5"><a href="/reset-password" className="text-black underline">Forgot Your Password? </a> </div>
                                         <div className="submit_btn_wrapper w-full mt-4">
                                             <button className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold">
                                                 Submit

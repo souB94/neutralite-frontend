@@ -43,7 +43,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/signup" element={<CreateAccount />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/thankyou" element={<ThankYou />} />
              <Route path="/dashboard" element={<Dashboard />} /> {/* New: Dashboard Route (create this) */}
             {/* **Crucial: Define a route for /404** */}
