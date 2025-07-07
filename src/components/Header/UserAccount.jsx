@@ -1,23 +1,71 @@
-function UserAccountControl() {
+// src/components/UserAccountControl/UserAccountControl.js
+import React, { useState, useEffect } from 'react'; // Import useState
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-    function showUserControl() {
-        const userControl = document.querySelector('.user_account_control');
-        userControl.classList.toggle('showUserControl');
-    }
+function UserAccountControl() {
+    const navigate = useNavigate();
+    const { user, logout } = useAuth();
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // New state to control menu visibility
+
+     // Add this useEffect to see user changes
+    useEffect(() => {
+        console.log("UserAccountControl: Current user state from AuthContext:", user);
+    }, [user]); // Re-run effect whenever 'user' changes
+
+
+    // Toggle menu visibility
+    const toggleMenu = () => {
+        setIsMenuOpen(prev => !prev);
+    };
+
+    const handleLogout = () => {
+        logout();
+        navigate('/'); // Redirect to home page or login page after logout
+        setIsMenuOpen(false); // Close the menu after logout
+    };
+
+    // Close the menu if clicked outside (optional, but good UX)
+    // You'd typically use a ref and an effect for this, but for simplicity,
+    // we'll rely on clicks on the links/buttons to close it.
 
     return (
         <>
-            <i className="fi fi-rr-circle-user cursor-pointer" onClick={showUserControl}></i>
-            <div className="user_account_control absolute showUserControl flex items-center gap-4">
-                <ul className="flex items-center flex-col justify-start border-1  border-gray-300 w-[100px] bg-cream-100">
-                    <li className="log_in  w-full">
-                        <a href="/signin" className="py-2 px-3 text-[14px] block  w-full text-gray-600 transition-colors duration-300 hover:text-white"><span className="fi fi-rr-user mr-2"></span>Log In</a>
-                    </li>
-                    <li className="sign_up  w-full">
-                        <a href="/signup" className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white"><span className="fi fi-rr-user-add mr-2"></span>Sign Up</a>
-                    </li>
-                </ul>
-            </div>
+            <i className="fi fi-rr-circle-user cursor-pointer" onClick={toggleMenu}></i>
+            {/* Conditionally render the dropdown menu based on isMenuOpen state */}
+            {isMenuOpen && (
+                <div className="user_account_control absolute flex items-center gap-4">
+                    <ul className="flex items-center flex-col justify-start border-1 border-gray-300 w-[100px] bg-cream-100">
+                        {user ? ( // Conditionally render based on 'user' state
+                            <>
+                                <li className="my_account w-full">
+                                    <Link to="/dashboard" onClick={toggleMenu} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white">
+                                        <span className="fi fi-rr-user mr-2"></span>My Account
+                                    </Link>
+                                </li>
+                                <li className="sign_out w-full">
+                                    <a onClick={handleLogout} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white cursor-pointer">
+                                        <span className="fi fi-rr-sign-out mr-2"></span>Sign Out
+                                    </a>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="log_in w-full">
+                                    <Link to="/signin" onClick={toggleMenu} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white">
+                                        <span className="fi fi-rr-user mr-2"></span>Log In
+                                    </Link>
+                                </li>
+                                <li className="sign_up w-full">
+                                    <Link to="/register" onClick={toggleMenu} className="py-2 px-3 text-[14px] block w-full text-gray-600 transition-colors duration-300 hover:text-white">
+                                        <span className="fi fi-rr-user-add mr-2"></span>Sign Up
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </div>
+            )}
         </>
     );
 }

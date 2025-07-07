@@ -18,6 +18,8 @@ import ThankYou from './pages/ThankYou/ThankYou';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage'; // Create this component
+import Dashboard from './pages/Dashboard/Dashboard';
+
 // Import the new Register component
 
 
@@ -43,6 +45,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/thankyou" element={<ThankYou />} />
+             <Route path="/dashboard" element={<Dashboard />} /> {/* New: Dashboard Route (create this) */}
             {/* **Crucial: Define a route for /404** */}
             <Route path="/404" element={<NotFoundPage />} />
             {/* **Crucial: Define a catch-all route for any other unmatched paths** */}
