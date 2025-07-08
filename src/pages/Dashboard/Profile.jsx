@@ -63,8 +63,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h2 className="text-xl font-bold mb-4">Your Profile</h2>
+    <div className="">
+      <h2 className='text-xl font-bold text-brown-600 border-b-2  mb-3 pb-2'>Your Profile</h2>
       {message && <p className="mb-4 text-red-500">{message}</p>}
       <form onSubmit={submitHandler} className="space-y-4">
         <input value={name} onChange={(e) => setName(e.target.value)} className="w-full p-2 border rounded" placeholder="Name" />
