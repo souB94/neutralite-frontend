@@ -17,17 +17,17 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import ThankYou from './pages/ThankYou/ThankYou';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage'; // Create this component
+import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Dashboard from './pages/Dashboard/Dashboard';
-
-// Import the new Register component
-
+import ProtectedRoute from './components/ProtectedRoute/PtotectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the CSS
 
 function App() {
   return (
     <>
-    <CartProvider>
-        <WishlistProvider> {/* WishlistProvider should also wrap your routes */}
+      <CartProvider>
+        <WishlistProvider>
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -36,7 +36,11 @@ function App() {
             <Route path="/product-details/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } />
             <Route path="/faq" element={<Faq />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogs/:id" element={<SingleBlog />} />
@@ -46,16 +50,16 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/thankyou" element={<ThankYou />} />
-             <Route path="/dashboard" element={<Dashboard />} /> {/* New: Dashboard Route (create this) */}
-            {/* **Crucial: Define a route for /404** */}
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/404" element={<NotFoundPage />} />
-            {/* **Crucial: Define a catch-all route for any other unmatched paths** */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          {/* ✅ Place ToastContainer outside of Routes */}
+          <ToastContainer />
         </WishlistProvider>
       </CartProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

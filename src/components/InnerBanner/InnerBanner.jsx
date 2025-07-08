@@ -20,7 +20,7 @@ function InnerBanner({ dynamicTitle }) { // dynamicTitle is good for specific dy
         '/faq': { title: 'FAQ', breadcrumb: 'FAQ' },
         '/signup': { title: 'Create Account', breadcrumb: 'Create Account' },
         '/signin': { title: 'Login', breadcrumb: 'Login' },
-        '/resetPassword': { title: 'Reset Password', breadcrumb: 'Reset Password' },
+        '/reset-password': { title: 'Reset Password', breadcrumb: 'Reset Password' },
         // We no longer need '/blogs/:id' in routeMap because we'll check with startsWith
         // Same for product-details, as we handle it with startsWith
     };
@@ -48,6 +48,16 @@ function InnerBanner({ dynamicTitle }) { // dynamicTitle is good for specific dy
         } else {
             // Fallback if dynamicTitle is not yet available (e.g., during loading of SingleBlog)
             pageData = { title: 'Blog Details', breadcrumb: 'Blog Details' };
+        }
+    }
+    // Handle dynamic paths like /blogs/:id
+    else if (location.pathname.startsWith('/reset-password/')) { // Note the trailing slash
+        if (dynamicTitle) {
+            // If dynamicTitle is passed (e.g., the actual blog title)
+            pageData = { title: dynamicTitle, breadcrumb: dynamicTitle };
+        } else {
+            // Fallback if dynamicTitle is not yet available (e.g., during loading of SingleBlog)
+            pageData = { title: 'Reset Password', breadcrumb: 'Reset Password' };
         }
     }
     // Handle the generic /404 path if explicitly navigated to it
