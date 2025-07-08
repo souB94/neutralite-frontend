@@ -15,13 +15,17 @@ import CreateAccount from './pages/CreateAccount/CreateAccount';
 import SignIn from './pages/SignIn/SignIn';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import ThankYou from './pages/ThankYou/ThankYou';
+import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+
 import Dashboard from './pages/Dashboard/Dashboard';
-import ProtectedRoute from './components/ProtectedRoute/PtotectedRoute';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Make sure to import the CSS
+import Orders from './pages/Dashboard/Orders';
+import Profile from './pages/Dashboard/Profile';
 
 function App() {
   return (
@@ -36,11 +40,14 @@ function App() {
             <Route path="/product-details/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/checkout" element={
-              <ProtectedRoute>
-                <Checkout />
-              </ProtectedRoute>
-            } />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/faq" element={<Faq />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blogs/:id" element={<SingleBlog />} />
@@ -50,11 +57,26 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/thankyou" element={<ThankYou />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+
+            {/* ✅ Dashboard Layout with Nested Routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Orders />} />
+              <Route path="orders" element={<Orders />} />
+              <Route path="profile" element={<Profile />} />
+              {/* Removed 'address' since it's part of profile now */}
+            </Route>
+
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-          {/* ✅ Place ToastContainer outside of Routes */}
+
           <ToastContainer />
         </WishlistProvider>
       </CartProvider>

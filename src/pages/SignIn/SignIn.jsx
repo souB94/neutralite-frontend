@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react'; // Make sure you import useContext
 import { AuthContext } from '../../context/AuthContext'; // Import useAuth hook
+import { toast } from 'react-toastify';
 
 function SignIn (){
 
@@ -79,20 +80,20 @@ function SignIn (){
             const data = await response.json();
 
             if (response.ok) {
-                setMessage('Login successful! Redirecting...');
+                toast.success('Login successful! Redirecting...');
                 login(data);
                 setTimeout(() => {
                     navigate('/dashboard'); // Redirect to home page after successful login
-                }, 2000);
+                }, 4000);
             } else {
-                setMessage(data.message || 'Login failed. Please try again.');
+                toast.error(data.message || 'Login failed. Please try again.');
                 if (data.errors) {
                     setErrors(data.errors);
                 }
             }
         } catch (error) {
             console.error('Login error:', error);
-            setMessage('An unexpected error occurred. Please try again later.');
+            toast.error('An unexpected error occurred. Please try again later.');
         } finally {
             setLoading(false);
         }

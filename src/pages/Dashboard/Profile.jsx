@@ -1,0 +1,81 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+const Profile = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+  const fetchProfile = async () => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')); // ✅ Read from userInfo
+    const token = userInfo?.token;
+
+    console.log("🔐 Token in fetchProfile:", token); // Optional debug
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.get('/api/users/profile', config);
+      setName(data.name);
+      setEmail(data.email);
+      setAddress(data.address || '');
+    } catch (err) {
+      console.error('❌ Error loading profile:', err);
+      toast.error('Failed to load profile');
+    }
+  };
+
+  fetchProfile();
+}, []);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Passwords do not match');
+      return;
+    }
+
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const token = userInfo?.token;
+
+    const config = {
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    },
+    };
+
+    try {
+      await axios.put('/api/users/profile', { name, email, address, password }, config);
+      toast.success('Profile updated successfully!');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Error updating profile');
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto mt-10">
+      <h2 className="text-xl font-bold mb-4">Your Profile</h2>
+      {message && <p className="mb-4 text-red-500">{message}</p>}
+      <form onSubmit={submitHandler} className="space-y-4">
+        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full p-2 border rounded" placeholder="Name" />
+        <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 border rounded" placeholder="Email" />
+        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full p-2 border rounded" placeholder="Address" />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 border rounded" placeholder="New Password" />
+        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-2 border rounded" placeholder="Confirm Password" />
+        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">Update</button>
+      </form>
+    </div>
+  );
+};
+
+export default Profile;

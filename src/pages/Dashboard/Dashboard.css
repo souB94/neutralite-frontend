@@ -1,0 +1,9 @@
+.dashboard_menu_info .menu_wrapper .menu_link{transition: all 0.35s ease-out;}
+.dashboard_menu_info .menu_wrapper .menu_link:hover{background: var(--bg-brown-600);}
+.dashboard_menu_info .menu_wrapper .menu_link:hover .icon_wrapper{color: var(--text-white);}
+.dashboard_menu_info .menu_wrapper .menu_link:hover .text_wrapper{color: var(--text-white);}
+.dashboard_menu_info .menu_wrapper .menu_link.active_menu{background: var(--bg-brown-600);}
+.dashboard_menu_info .menu_wrapper .menu_link.active_menu .icon_wrapper{color: var(--text-white);}
+.dashboard_menu_info .menu_wrapper .menu_link.active_menu .text_wrapper{color: var(--text-white);}
+.dashboard_content_wrapper{display: flex;justify-content: center;align-items: flex-start;gap: 35px;}
+
