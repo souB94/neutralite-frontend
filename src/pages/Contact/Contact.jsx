@@ -1,8 +1,78 @@
 import InnerBanner from '../../components/InnerBanner/InnerBanner';
 import Footer from "../../components/Footer/Footer";
 import Map from "../../components/Map/Map";
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Contact (){
+
+    const [formData, setFormData] = useState({
+        name : '',
+        email : '',
+        message : ''
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+        newErrors.name = 'Name is required';
+    }
+
+    if (!formData.email.trim()) {
+        newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'Email is invalid';
+    }
+
+    if (!formData.message.trim()) {
+        newErrors.message = 'Message is required';
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+};
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name] : e.target.value
+        });
+    };
+
+    const backendUrl = import.meta.env.VITE_APP_BACKEND_URL || 'http://localhost:5000';
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+         if (!validateForm()) return;
+         try {
+            const response = await fetch(`${backendUrl}/api/contact`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+               toast.success('Your message has been sent!');
+                // Clear the form
+                setFormData({ name: '', email: '', message: '' });
+                setErrors({});
+            } else {
+                toast.error(result.error || 'Failed to send message.');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            toast.error('Something went wrong. Please try again later.');
+        }
+    }
+
     return(
         <>
         
@@ -69,16 +139,19 @@ function Contact (){
                                 <p className="text-gray text-[15px] font-roboto">Reach out with any questions, feedback, or support needs — we’ll get back to you as soon as possible.</p>
                             </div>
                             <div className="contact_form_wrapper">
-                                <form id="contact_form" className="bg-cream-400 mt-8 max-w-[850px] mx-auto">
+                                <form id="contact_form" className="bg-cream-400 mt-8 max-w-[850px] mx-auto" onSubmit={handleSubmit} >
                                     <div className="form_inner_wrapper flex flex-wrap p-5 items-start justify-between">
                                         <div className="form_group name w-full ">
-                                            <input id="name" name="name" type="text" className="form_control py-3 px-5 bg-white w-full" placeholder="Name" />
+                                            <input id="name" name="name" type="text" className="form_control py-3 px-5 bg-white w-full" placeholder="Name" value={formData.name} onChange={handleChange} />
+                                            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                                         </div>
                                             <div className="form_group email w-full mt-3">
-                                            <input id="email" name="email" type="email" className="form_control py-3 px-5 bg-white w-full" placeholder="Email" />
+                                            <input id="email" name="email" type="email" className="form_control py-3 px-5 bg-white w-full" placeholder="Email" value={formData.email} onChange={handleChange} />
+                                            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                                         </div>
                                         <div className="form-group message w-full mt-3">
-                                            <textarea name="mesage" id="message" className="form_control h-40 bg-white w-full py-3 px-5" placeholder="Your Message"></textarea>
+                                            <textarea name="message" id="message" className="form_control h-40 bg-white w-full py-3 px-5" placeholder="Your Message" value={formData.message} onChange={handleChange}></textarea>
+                                            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
                                         </div>
                                         <div className="submit_btn_wrapper w-full mt-4">
                                             <button className="flex-1 bg-brown-600 text-white py-3 px-4 cursor-pointer w-full font-urbanist font-bold">
