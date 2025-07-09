@@ -108,7 +108,7 @@ function BannerSlider() {
                 <div className="banner_content_wrapper relative flex items-center justify-between pt-40">
                   <div className="banner_content w-[47%] transform -translate-y-10">
                     <h1 className="text-[65px] text-black font-urbanist font-bold mb-4 leading-[1.2]">{banner.title}</h1>
-                    <p className="text-[18px] text-gray font-roboto ">{banner.description || "Discover the ultimate face cream for radiant, healthy skin. Packed with natural ingredients, our formula hydrates, nourishes, and revives—giving your skin the care it truly deserves."}</p>
+                    <p className="text-[15px] text-gray font-roboto ">{banner.description || "Discover the ultimate face cream for radiant, healthy skin. Packed with natural ingredients, our formula hydrates, nourishes, and revives—giving your skin the care it truly deserves."}</p>
                     <button className="banner_btn bg-brown-600 flex text-white text-[16px] cursor-pointer font-urbanist font-semibold py-3 px-5 mt-6" onClick={handleViewProduct}>
                       Shop Now <span className="fi fi-rr-arrow-right ml-2 transform translate-y-[3px]"></span>
                     </button>
@@ -143,7 +143,7 @@ function BannerSlider() {
               <div className="banner_content_wrapper relative flex items-center justify-between pt-40">
                 <div className="banner_content w-[47%] transform -translate-y-10">
                   <h1 className="text-[65px] text-black font-urbanist font-bold mb-4 leading-[1.2]">No Banners Available</h1>
-                  <p className="text-[18px] text-gray font-roboto ">Please check your database or add new banners.</p>
+                  <p className="text-[15px] text-gray font-roboto ">Please check your database or add new banners.</p>
                 </div>
                 <div className="banner_image_wrapper w-[50%] relative">
                   {/* Use default imported images for this static fallback slide */}
