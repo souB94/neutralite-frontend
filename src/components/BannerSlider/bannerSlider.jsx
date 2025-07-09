@@ -116,7 +116,7 @@ function BannerSlider() {
                   <div className="banner_image_wrapper w-[50%] relative">
                     {/* Use banner.bannerGirlImage (or whatever field holds the main banner image) from your API data */}
                     <img
-                      className='main-img ml-auto relative z-2 w-[500px] tranform translate-x-[60px]'
+                      className='main-img ml-auto relative z-2 w-[500px] tranform translate-x-[60px] translate-y-[10px]'
                       src={banner.bannerGirlImage} // <--- USE DYNAMIC IMAGE URL FROM API
                       alt={banner.title || "Banner Girl Image"}
                       onError={(e) => { e.target.onerror = null; e.target.src = BannerGirlDefault; }} // Fallback
