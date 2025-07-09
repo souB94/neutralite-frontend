@@ -67,12 +67,13 @@ const Profile = () => {
       <h2 className='text-xl font-bold text-brown-600 border-b-2  mb-3 pb-2'>Your Profile</h2>
       {message && <p className="mb-4 text-red-500">{message}</p>}
       <form onSubmit={submitHandler} className="space-y-4">
-        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full p-2 border rounded" placeholder="Name" />
-        <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-2 border rounded" placeholder="Email" />
-        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full p-2 border rounded" placeholder="Address" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 border rounded" placeholder="New Password" />
-        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-2 border rounded" placeholder="Confirm Password" />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">Update</button>
+        <input value={name} onChange={(e) => setName(e.target.value)} className="w-full px-5 py-3 border border-amber-200 bg-white" placeholder="Name" />
+        <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-5 py-3 border border-amber-200 bg-white" placeholder="Email" />
+        <input value={address} onChange={(e) => setAddress(e.target.value)} className="w-full px-5 py-3 border border-amber-200 bg-white" placeholder="Address" />
+        <h4 className='text-brown-600 font-bold italic'>Update If Required</h4>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-5 py-3 border border-amber-200 bg-white" placeholder="New Password" />
+        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full px-5 py-3 border border-amber-200 bg-white" placeholder="Confirm Password" />
+        <button type="submit" className="w-full bg-blue-600 text-white px-5 py-3 bg-brown-600 cursor-pointer font-bold font-urbanist">Update</button>
       </form>
     </div>
   );

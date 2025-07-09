@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import InnerBanner from '../../components/InnerBanner/InnerBanner';
 import Footer from "../../components/Footer/Footer";
+import { toast } from 'react-toastify';
 
 function ResetPassword() {
     const { token } = useParams(); // Token from URL
@@ -38,12 +39,12 @@ function ResetPassword() {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(data.message || 'Password reset link sent to your email.');
+                toast.success(data.message || 'Password reset link sent to your email.');
             } else {
-                setError(data.message || 'Error sending reset link.');
+                toast.error(data.message || 'Error sending reset link.');
             }
         } catch (err) {
-            setError('An error occurred. Please try again.');
+             toast.error('An error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -78,13 +79,13 @@ function ResetPassword() {
             const data = await response.json();
 
             if (response.ok) {
-                setMessage(data.message || 'Password reset successful!');
+               toast.success(data.message || 'Password reset successful!');
                 setTimeout(() => navigate('/signin'), 3000);
             } else {
-                setError(data.message || 'Reset failed.');
+                toast.error(data.message || 'Reset failed.');
             }
         } catch (err) {
-            setError('An error occurred. Please try again.');
+            toast.error('An error occurred. Please try again.');
         } finally {
             setLoading(false);
         }

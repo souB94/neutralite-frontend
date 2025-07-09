@@ -247,6 +247,9 @@ function Checkout(){
 
         const isValid = validateForm();
 
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        const token = userInfo?.token;
+
         if (isValid) {
             // Use checkoutItems for order submission
             const processedCheckoutItems = checkoutItems.map(item => ({
@@ -275,8 +278,9 @@ function Checkout(){
             try {
                 const response = await fetch(`${backendUrl}/api/orders`, {
                     method: 'POST',
-                    headers: {
+                     headers: {
                         'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`, // ✅ Add this line
                     },
                     body: JSON.stringify(orderData),
                 });

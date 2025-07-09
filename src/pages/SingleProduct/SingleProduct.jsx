@@ -7,6 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import InnerBanner from "../../components/InnerBanner/InnerBanner";
 
 
+
 import { FaStar, FaFacebookF, FaInstagram } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
@@ -23,6 +24,7 @@ function ProductDetails() {
     const { wishlistItems, setWishlistItems } = useWishlist(); // Access wishlist items from context
 
     const [product, setProduct] = useState(null); // State to store the fetched product
+     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null);    // State to track any fetch errors
     const [quantity, setQuantity] = useState(1); // Default quantity to 1
@@ -84,6 +86,22 @@ function ProductDetails() {
             });
         }
     };
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/products`)
+        .then(async res => {
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`HTTP error! status: ${res.status}, Response: ${text}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            setProducts(data);
+            console.log("Fetched Products:", data);
+        })
+        .catch(err => console.error('Fetch error:', err));
+    },[]);
 
     // --- useEffect to fetch product data ---
     useEffect(() => {
@@ -329,6 +347,80 @@ function ProductDetails() {
                                 {activeTab === 'reviews' && (
                                     <p>Customer reviews content goes here.</p>
                                 )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className='related_product_section py-10'>
+                    <div className='container max-w-[1320px] mx-auto px-4'>
+                        <div className='section_content_wrapper '>
+                            <div className='section_header'>
+                                <h2 className='text-[35px] font-bold text-black pb-2 border-b-2 block'>Related Products</h2>
+                                
+                            </div>
+                            <div className="product_row_wrapper mt-6 mx-[-20px]">
+                                <div className="product_row flex items-center justify-center">
+                                    {products.map((product) => {
+                                        const isInCart = cartItems.some(item => item._id === product._id);
+                                        const defaultCartIconClasses = 'fi fi-rr-shopping-cart h-[24px]'; // Default cart icon class
+                                        const addedCartIconClasses = 'fi fi-sr-shopping-cart h-[24px]'; // Class for when the product is in the cart
+
+                                        const isInWishlist = wishlistItems.some(item => item._id === product._id);
+                                        const defaultWishlistIconClasses = 'fi fi-rr-heart h-[24px]'; // Default wishlist icon class
+                                        const addedWishlistIconClasses = 'fi fi-sr-heart h-[24px]'; // Class for when the product is in the wishlist
+
+                                        const wishlistBoxClasses = `wishlist_icon w-[50px] h-[50px] flex items-center justify-center cursor-pointer bg-cream-400 text-black text-[22px] mb-2 ${isInWishlist ? 'added_to_wishlist' : ''}`; // Add desired classes here
+                                        const cartBoxClasses = `cart_icon w-[50px] h-[50px] flex items-center justify-center cursor-pointer bg-cream-400 text-black text-[22px] mb-2 ${isInCart ? 'added_to_cart' : ''}`; // Add desired classes here
+                                        // Change icon color based on cart and wishlist status
+                                        // Use ternary operators to conditionally apply classes based on whether the product is in the cart or wishlist
+                                        // If the product is in the cart, use the addedCartIconClasses, otherwise use the defaultCartIconClasses
+                                        // If the product is in the wishlist, use the addedWishlistIconClasses, otherwise use the defaultWishlistIconClasses
+                                        // This will change the icon color based on whether the product is in the cart or wishlist
+                                        const finalCartIconClasses = isInCart ? addedCartIconClasses : defaultCartIconClasses; // Change icon color based on cart status
+                                        const finalWishlistIconClasses = isInWishlist ? addedWishlistIconClasses : defaultWishlistIconClasses; // Change icon color based on wishlist status
+
+                                        return (
+                                            <a href={`/product-details/${product._id}`} className="product_box w-1/3 p-5" key={product._id} id={product._id}>
+                                                <div className="product_img_wrapper bg-white border-1 border-gray-200 relative overflow-hidden">
+                                                    <div className='product_img_box flex item-center justify-center'>
+                                                        <img className='w-[300px] h-[445px]' src={`${import.meta.env.VITE_APP_BACKEND_URL}/uploads/${product.imageUrl}`} alt={product.name} />
+                                                    </div>
+                                                    <div className='floating_wishlist_cart_icon_group absolute'>
+                                                        <div className={wishlistBoxClasses} onClick={(e) => {
+                                                                e.preventDefault(); // Prevent navigation if this button is inside an <a> tag
+                                                                addToWishlist(product); // Call addToWishlist with the current product object
+                                                            }} >    
+                                                            <i className={finalWishlistIconClasses}></i>
+                                                        </div>
+                                                        <div className={cartBoxClasses} onClick={(e) => {
+                                                                e.preventDefault(); // Prevent navigation if this button is inside an <a> tag
+                                                                addToCart(product); // Call addToCart with the current product object
+                                                            }}
+                                                            >
+                                                            <i className={finalCartIconClasses}></i>
+                                                        </div>
+                                                    </div>
+                                                    <button className='buy_now_btn bg-cream-400 px-4 py-3 cursor-pointer uppercase tracking-widest font-urbanist text-[17px] font-medium text-black' onClick={() => handleViewProductDetails(product._id)}>
+                                                        buy now
+                                                    </button>
+                                                </div>
+                                                <div className='product_text_wrapper text-wrapper mt-5 text-center'>
+                                                    <h3 className='product_title text-[22px] font-urbanist font-medium mb-1.5'>{product.name}</h3>
+                                                    <div className='rating_star flex item-center justify-center text-black gap-1.5 mb-1'>
+                                                        <i className="fi fi-ss-star"></i>
+                                                        <i className="fi fi-ss-star"></i>
+                                                        <i className="fi fi-ss-star"></i>
+                                                        <i className="fi fi-ss-star"></i>
+                                                        <i className="fi fi-ss-star"></i>
+                                                    </div>
+                                                    <div className='product_price'>
+                                                        <h4 className='font-bold font-urbanist text-[20px]'>{product.price}</h4>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>
