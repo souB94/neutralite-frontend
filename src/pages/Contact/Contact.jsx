@@ -15,26 +15,25 @@ function Contact (){
     const [errors, setErrors] = useState({});
 
     const validateForm = () => {
-    const newErrors = {};
+        const newErrors = {};
 
-    if (!formData.name.trim()) {
-        newErrors.name = 'Name is required';
-    }
+        if (!formData.name.trim()) {
+            newErrors.name = 'Name is required';
+        }
 
-    if (!formData.email.trim()) {
-        newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-        newErrors.email = 'Email is invalid';
-    }
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = 'Email is invalid';
+        }
 
-    if (!formData.message.trim()) {
-        newErrors.message = 'Message is required';
-    }
+        if (!formData.message.trim()) {
+            newErrors.message = 'Message is required';
+        }
 
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-};
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleChange = (e) => {
         setFormData({

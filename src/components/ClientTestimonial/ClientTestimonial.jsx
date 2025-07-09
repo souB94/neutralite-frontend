@@ -4,7 +4,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import QuoteIcon from '../../assets/images/quote_icon.png';
-import ClientImage from '../../assets/images/client_img.png';
+import ClientImageOne from '../../assets/images/testimonial/client_img_1.png';
+import ClientImageTwo from '../../assets/images/testimonial/client_img_2.png';
+import ClientImageThree from '../../assets/images/testimonial/client_img_3.png';
 
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'; 
 import './ClientTestimonial.css';
@@ -29,13 +31,13 @@ function ClientTestimonial(){
                 </div>
             ),
             ClientName: 'Ariana M'+'.',
-            ClientImage: ClientImage
+            ClientImage: ClientImageOne
         },
         {
             id: 'testimonial_slide_2',
             className: 'testimonial_slide',
             icon: QuoteIcon,
-            comment: 'My skin has never felt this soft and radiant! I’ve struggled with dryness for years, and this cream changed everything. It’s part of my daily ritual now.',
+            comment: 'Ahasellus pellentesque Proin tempus tempor diam, non pellentesque quam ornare vel. Aenean laoreet. Praesent in nunc vel urna consequat mattis eget vel libero.',
             rating: (
                 <div className='rating_star flex item-center justify-center text-black gap-1.5 mb-1'>
                     <i className="fi fi-ss-star"></i>
@@ -45,14 +47,14 @@ function ClientTestimonial(){
                     <i className="fi fi-ss-star"></i>
                 </div>
             ),
-            ClientName: 'Ariana M'+'.',
-            ClientImage: ClientImage
+            ClientName: 'Barbara T'+'.',
+            ClientImage: ClientImageTwo
         },
         {
             id: 'testimonial_slide_3',
             className: 'testimonial_slide',
             icon: QuoteIcon,
-            comment: 'My skin has never felt this soft and radiant! I’ve struggled with dryness for years, and this cream changed everything. It’s part of my daily ritual now.',
+            comment: 'Teaesent in nunc vel urna consequat mattis eget vel libero. Phasellus pellentesque Proin tempus tempor diam, non pellentesque quam ornare vel. Aenean laorees',
             rating: (
                 <div className='rating_star flex item-center justify-center text-black gap-1.5 mb-1'>
                     <i className="fi fi-ss-star"></i>
@@ -62,8 +64,8 @@ function ClientTestimonial(){
                     <i className="fi fi-ss-star"></i>
                 </div>
             ),
-            ClientName: 'Ariana M'+'.',
-            ClientImage: ClientImage
+            ClientName: 'Ketty J'+'.',
+            ClientImage: ClientImageThree
         }
     ]
 
