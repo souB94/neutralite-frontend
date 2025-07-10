@@ -73,7 +73,7 @@ function Orders() {
                 <td className="p-2 border">
                   {order.isPaid ? (
                     <span className="text-green-600 font-semibold">Paid</span>
-                  ) : (
+                  ) : ( 
                     <span className="text-yellow-600 font-semibold">Pending</span>
                   )}
                 </td>

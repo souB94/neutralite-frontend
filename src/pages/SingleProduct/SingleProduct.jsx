@@ -24,7 +24,7 @@ function ProductDetails() {
     const { wishlistItems, setWishlistItems } = useWishlist(); // Access wishlist items from context
 
     const [product, setProduct] = useState(null); // State to store the fetched product
-     const [products, setProducts] = useState([]);
+    const [bestSellerProducts, setBestSellerProducts] = useState([]);
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null);    // State to track any fetch errors
     const [quantity, setQuantity] = useState(1); // Default quantity to 1
@@ -88,7 +88,7 @@ function ProductDetails() {
     };
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/products`)
+        fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/bestSellers`)
         .then(async res => {
             if (!res.ok) {
                 const text = await res.text();
@@ -97,7 +97,7 @@ function ProductDetails() {
             return res.json();
         })
         .then(data => {
-            setProducts(data);
+            setBestSellerProducts(data);
             console.log("Fetched Products:", data);
         })
         .catch(err => console.error('Fetch error:', err));
@@ -360,7 +360,7 @@ function ProductDetails() {
                             </div>
                             <div className="product_row_wrapper mt-6 mx-[-20px]">
                                 <div className="product_row flex items-center justify-center">
-                                    {products.map((product) => {
+                                    {bestSellerProducts.map((product) => {
                                         const isInCart = cartItems.some(item => item._id === product._id);
                                         const defaultCartIconClasses = 'fi fi-rr-shopping-cart h-[24px]'; // Default cart icon class
                                         const addedCartIconClasses = 'fi fi-sr-shopping-cart h-[24px]'; // Class for when the product is in the cart
@@ -400,7 +400,14 @@ function ProductDetails() {
                                                             <i className={finalCartIconClasses}></i>
                                                         </div>
                                                     </div>
-                                                    <button className='buy_now_btn bg-cream-400 px-4 py-3 cursor-pointer uppercase tracking-widest font-urbanist text-[17px] font-medium text-black' onClick={() => handleViewProductDetails(product._id)}>
+                                                    {/* THIS IS THE MODIFIED BUTTON */}
+                                                    <button
+                                                        className='buy_now_btn bg-cream-400 px-4 py-3 cursor-pointer uppercase tracking-widest font-urbanist text-[17px] font-medium text-black'
+                                                        onClick={(e) => {
+                                                            e.preventDefault(); // Important: Prevent the default behavior of the parent <a> tag
+                                                            navigate(`/product-details/${product._id}`); // Navigate to the related product's details page
+                                                        }}
+                                                    >
                                                         buy now
                                                     </button>
                                                 </div>
