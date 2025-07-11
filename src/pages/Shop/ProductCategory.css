@@ -39,3 +39,6 @@
 .product_list_section .product_area .product_row {margin: 0 -7px;}
 .filter_block_header .icon_wrapper{display: none;}
 .toggle_icon{display: none;}
+
+.out-of-stock-product{filter: grayscale(100);pointer-events: none;}
+.out-of-stock-product::after{position: absolute;content:'Out Of Stock'; top:30px;right:30px;padding: 5px 10px; background: #000;font-family: var(--font-urbanist);color:#fff;font-size:14px;}

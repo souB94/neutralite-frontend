@@ -40,7 +40,7 @@ function ProductCategory() {
     const [selectedCategories, setSelectedCategories] = useState(new Set()); // Using Set for efficient category checking
     const [minPriceFilter, setMinPriceFilter] = useState('');
     const [maxPriceFilter, setMaxPriceFilter] = useState('');
-    const [inStockOnly, setInStockOnly] = useState(false);
+    const [selectedAvailability, setSelectedAvailability] = useState('');
 
     // --- State for Filtered Products (the actual products displayed) ---
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -113,11 +113,23 @@ function ProductCategory() {
         setMaxPriceFilter(e.target.value);
     };
 
-    const handleAvailabilityChange = (e) => {
-        if (e.target.value === 'In stock') {
-            setInStockOnly(e.target.checked);
-        }
-    };
+    // Assuming you have changed your state from:
+// const [inStockOnly, setInStockOnly] = useState(false);
+// TO:
+// const [selectedAvailability, setSelectedAvailability] = useState('');
+
+const handleAvailabilityChange = (e) => {
+    const clickedValue = e.target.value; // This will be "In stock" or "Out Of Stock"
+
+    // Check if the clicked checkbox is already the currently selected filter
+    if (clickedValue === selectedAvailability) {
+        // If it is, the user is trying to deselect it, so clear the filter
+        setSelectedAvailability('');
+    } else {
+        // If it's a new selection, set the filter to the clicked value
+        setSelectedAvailability(clickedValue);
+    }
+};
 
 
     // --- useEffect for fetching ALL Products (General & Personal Care) ---
@@ -150,46 +162,57 @@ function ProductCategory() {
     }, []);
 
 
-    // --- useEffect for applying filters to products ---
-    useEffect(() => {
-        if (allProducts.length === 0 && !loadingAllProducts) {
-            setFilteredProducts([]);
-            return;
+    // Assuming you have replaced:
+// const [inStockOnly, setInStockOnly] = useState(false);
+// WITH:
+// const [selectedAvailability, setSelectedAvailability] = useState(''); // Initial value should be empty string or 'all'
+
+useEffect(() => {
+    if (allProducts.length === 0 && !loadingAllProducts) {
+        setFilteredProducts([]);
+        return;
+    }
+
+    let tempFilteredProducts = [...allProducts];
+
+    // --- MODIFIED AVAILABILITY FILTER LOGIC ---
+    if (selectedAvailability === 'In stock') {
+        tempFilteredProducts = tempFilteredProducts.filter(product => product.stock > 0);
+    } else if (selectedAvailability === 'Out Of Stock') {
+        tempFilteredProducts = tempFilteredProducts.filter(product => product.stock === 0);
+    }
+    // If selectedAvailability is '', no stock filter is applied, which is the desired behavior.
+    // --- END MODIFIED AVAILABILITY FILTER LOGIC ---
+
+
+    const minPrice = parseFloat(minPriceFilter);
+    const maxPrice = parseFloat(maxPriceFilter);
+
+    tempFilteredProducts = tempFilteredProducts.filter(product => {
+        const productPrice = parseFloat(product.price?.replace('$', ''));
+        if (isNaN(productPrice)) return false;
+
+        let passesMin = true;
+        let passesMax = true;
+
+        if (!isNaN(minPrice)) {
+            passesMin = productPrice >= minPrice;
         }
-
-        let tempFilteredProducts = [...allProducts];
-
-        if (inStockOnly) {
-            tempFilteredProducts = tempFilteredProducts.filter(product => product.stock > 0);
+        if (!isNaN(maxPrice)) {
+            passesMax = productPrice <= maxPrice;
         }
+        return passesMin && passesMax;
+    });
 
-        const minPrice = parseFloat(minPriceFilter);
-        const maxPrice = parseFloat(maxPriceFilter);
+    if (selectedCategories.size > 0) {
+        tempFilteredProducts = tempFilteredProducts.filter(product =>
+            product.category && selectedCategories.has(product.category.trim())
+        );
+    }
 
-        tempFilteredProducts = tempFilteredProducts.filter(product => {
-            const productPrice = parseFloat(product.price?.replace('$', ''));
-            if (isNaN(productPrice)) return false;
-
-            let passesMin = true;
-            let passesMax = true;
-
-            if (!isNaN(minPrice)) {
-                passesMin = productPrice >= minPrice;
-            }
-            if (!isNaN(maxPrice)) {
-                passesMax = productPrice <= maxPrice;
-            }
-            return passesMin && passesMax;
-        });
-
-        if (selectedCategories.size > 0) {
-            tempFilteredProducts = tempFilteredProducts.filter(product =>
-                product.category && selectedCategories.has(product.category.trim())
-            );
-        }
-
-        setFilteredProducts(tempFilteredProducts);
-    }, [allProducts, selectedCategories, minPriceFilter, maxPriceFilter, inStockOnly, loadingAllProducts]);
+    setFilteredProducts(tempFilteredProducts);
+}, [allProducts, selectedCategories, minPriceFilter, maxPriceFilter, selectedAvailability, loadingAllProducts]);
+// --- IMPORTANT: Changed 'inStockOnly' to 'selectedAvailability' in the dependency array ---
 
 
     // --- useEffect for fetching Best Seller Products ---
@@ -258,9 +281,11 @@ function ProductCategory() {
         const finalCartIconClasses = isInCart ? addedCartIconClasses : defaultCartIconClasses;
         const finalWishlistIconClasses = isInWishlist ? addedWishlistIconClasses : defaultWishlistIconClasses;
 
+        const isOutOfStock = product.stock === 0; // Or product.stock <= 0
+
         return (
             <div
-                className="product_box w-full sm:w-1/2 md:w-1/3 p-5 flex flex-col items-center"
+                className={`product_box w-full sm:w-1/2 md:w-1/3 p-5 flex flex-col items-center ${isOutOfStock ? 'out-of-stock-product' : ''}`}
                 key={product._id}
             >
                 <div
@@ -365,7 +390,7 @@ function ProductCategory() {
                                                                     onChange={block.label === 'Availability' ? handleAvailabilityChange : handleCategoryChange}
                                                                     checked={
                                                                         block.label === 'Availability'
-                                                                            ? (opt.label === 'In stock' && inStockOnly) || (opt.label === 'Out Of Stock' && !inStockOnly)
+                                                                           ? selectedAvailability === opt.label // <-- This is the key line
                                                                             : selectedCategories.has(opt.label)
                                                                     }
                                                                 />
@@ -495,10 +520,10 @@ function ProductCategory() {
                                             </select>
 
                                             {/* View Toggle Icons */}
-                                            <button className="bg-brown-600 text-white p-2 hover:opacity-80 cursor-pointer">
+                                            <button className="bg-brown-600 text-white p-2 hover:opacity-80 cursor-pointer hidden">
                                                 <i className="fi fi-rr-apps flex"></i> {/* Grid View Icon */}
                                             </button>
-                                            <button className="bg-cream-400 text-black p-2  border hover:bg-brown-600 cursor-pointer">
+                                            <button className="bg-cream-400 text-black p-2  border hover:bg-brown-600 cursor-pointer hidden">
                                                 <i className="fi fi-rr-list flex"></i> {/* List View Icon */}
                                             </button>
                                         </div>
