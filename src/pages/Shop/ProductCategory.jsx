@@ -57,6 +57,13 @@ function ProductCategory() {
         setFilterBarVisible(!isFilterBarVisible);
     };
 
+    // Inside ProductCategory.jsx, near your other useState declarations
+    const [sortOption, setSortOption] = useState('default'); // Default sort option
+
+    const handleSortChange = (e) => {
+        setSortOption(e.target.value);
+    };
+
     // Add to Cart function
     const addToCart = (productToAdd) => {
         const existingItem = cartItems.find(item => item._id === productToAdd._id);
@@ -210,8 +217,22 @@ useEffect(() => {
         );
     }
 
+    // --- NEW: Apply Sorting Logic ---
+    if (sortOption === 'priceAsc') {
+        tempFilteredProducts.sort((a, b) => parseFloat(a.price?.replace('$', '')) - parseFloat(b.price?.replace('$', '')));
+    } else if (sortOption === 'priceDesc') {
+        tempFilteredProducts.sort((a, b) => parseFloat(b.price?.replace('$', '')) - parseFloat(a.price?.replace('$', '')));
+    } else if (sortOption === 'newest') {
+        // Assuming your products have a 'createdAt' or 'updatedAt' timestamp property
+        // You might need to adjust 'createdAt' based on your actual data structure
+        tempFilteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+    // 'default' or any unhandled sortOption will result in no explicit sort,
+    // maintaining the original order or the order after filtering.
+    // --- END NEW SORTING LOGIC ---
+
     setFilteredProducts(tempFilteredProducts);
-}, [allProducts, selectedCategories, minPriceFilter, maxPriceFilter, selectedAvailability, loadingAllProducts]);
+}, [allProducts, selectedCategories, minPriceFilter, maxPriceFilter, selectedAvailability, loadingAllProducts, sortOption]);
 // --- IMPORTANT: Changed 'inStockOnly' to 'selectedAvailability' in the dependency array ---
 
 
@@ -511,12 +532,13 @@ useEffect(() => {
                                             <select
                                                 id="sortBy"
                                                 className="border bg-white border-gray-300 px-2 py-1 text-sm font-urbanist outline-0 h-[35px]"
-                                                defaultValue="featured"
+                                                value={sortOption}
+                                                onChange={handleSortChange}
                                             >
-                                                <option value="featured">Featured</option>
-                                                <option value="lowToHigh">Price: Low to High</option>
-                                                <option value="highToLow">Price: High to Low</option>
-                                                <option value="newest">Newest</option>
+                                                <option value="default">Default Sorting</option>
+                                                <option value="priceAsc">Price: Low to High</option>
+                                                <option value="priceDesc">Price: High to Low</option>
+                                                <option value="newest">Newest Arrivals</option>
                                             </select>
 
                                             {/* View Toggle Icons */}
