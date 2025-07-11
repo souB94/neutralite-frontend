@@ -62,7 +62,7 @@ function topBrands() {
     
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/products`)
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/products`)
         .then(async res => {
             if (!res.ok) {
                 const text = await res.text();
@@ -71,11 +71,16 @@ function topBrands() {
             return res.json();
         })
         .then(data => {
-            setProducts(data);
-            console.log("Fetched Products:", data);
+            if (Array.isArray(data)) {
+                setProducts(data);
+                console.log("Fetched Products:", data);
+            } else {
+                console.error("Unexpected response format: expected an array", data);
+                setProducts([]); // fallback to empty array to avoid map error
+            }
         })
         .catch(err => console.error('Fetch error:', err));
-    },[]);
+}, []);
 
     useEffect(() => {
         console.log("Cart Items UPDATED:", cartItems);
