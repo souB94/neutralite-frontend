@@ -25,7 +25,9 @@ function Orders() {
         };
 
         const { data } = await axios.get('/api/orders/myorders', config);
-        setOrders(data);
+        console.log("API Response:", data); // <--- ADD THIS
+        setOrders(data.orders || data); // <-- Update based on response shape
+        //setOrders(data);
       } catch (error) {
         console.error('Error fetching orders:', error);
         toast.error('Failed to fetch orders.');
