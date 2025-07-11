@@ -24,7 +24,7 @@ function Orders() {
           },
         };
 
-        const { data } = await axios.get('/api/orders/myorders', config);
+        const { data } = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/api/orders/myorders`, config);
         console.log("API Response:", data); // <--- ADD THIS
         setOrders(data.orders || data); // <-- Update based on response shape
         //setOrders(data);
