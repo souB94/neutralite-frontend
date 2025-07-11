@@ -61,7 +61,7 @@ function Orders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {Array.isArray(orders) && orders?.map((order) => (
               <tr key={order._id}>
                 <td className="p-2 border">{order._id}</td>
                 <td className="p-2 border">

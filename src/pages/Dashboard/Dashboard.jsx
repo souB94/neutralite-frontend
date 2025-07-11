@@ -5,7 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import "./Dashboard.css";
 
 function Dashboard() {
-  const { user } = useContext(AuthContext); // Access user from context
+  const { user } = useContext(AuthContext); // Access user from contextmap
 
   return (
     <section className='dashboard py-10'>
