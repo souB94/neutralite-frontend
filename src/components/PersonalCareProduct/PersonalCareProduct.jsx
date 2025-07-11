@@ -143,12 +143,10 @@ function PersonalCareProduct() {
                                         </div>
                                         <div className='product_text_wrapper text-wrapper mt-5 text-center'>
                                             <h3 className='product_title text-[22px] font-urbanist font-medium mb-1.5'>{product.name}</h3>
-                                            <div className='rating_star flex item-center justify-center text-black gap-1.5 mb-1'>
-                                                <i className="fi fi-ss-star"></i>
-                                                <i className="fi fi-ss-star"></i>
-                                                <i className="fi fi-ss-star"></i>
-                                                <i className="fi fi-ss-star"></i>
-                                                <i className="fi fi-ss-star"></i>
+                                            <div className='rating_star flex items-center justify-center text-black gap-1.5 mb-1'>
+                                                {[...Array(5)].map((_, i) => (
+                                                    <i key={i} className={`fi ${i < parseInt(product.rating) ? 'fi-ss-star' : 'fi-ts-star'}`}></i>
+                                                ))}
                                             </div>
                                             <div className='product_price'>
                                                 <h4 className='font-bold font-urbanist text-[20px]'>{product.price}</h4>

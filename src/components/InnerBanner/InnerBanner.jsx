@@ -21,6 +21,7 @@ function InnerBanner({ dynamicTitle }) { // dynamicTitle is good for specific dy
         '/signup': { title: 'Create Account', breadcrumb: 'Create Account' },
         '/signin': { title: 'Login', breadcrumb: 'Login' },
         '/reset-password': { title: 'Reset Password', breadcrumb: 'Reset Password' },
+        '/search': { title: 'Search Results', breadcrumb: 'Search' },
         // We no longer need '/blogs/:id' in routeMap because we'll check with startsWith
         // Same for product-details, as we handle it with startsWith
     };
@@ -31,6 +32,8 @@ function InnerBanner({ dynamicTitle }) { // dynamicTitle is good for specific dy
     if (routeMap[location.pathname]) {
         pageData = routeMap[location.pathname];
     }
+
+   
 
     // Handle dynamic paths like /product-details/:id
     if (location.pathname.startsWith('/product-details/')) { // Note the trailing slash

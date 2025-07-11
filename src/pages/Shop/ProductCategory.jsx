@@ -351,7 +351,7 @@ useEffect(() => {
                     </h3>
                     <div className='rating_star flex items-center justify-center text-black gap-1.5 mb-1'>
                         {[...Array(5)].map((_, i) => (
-                            <i key={i} className={`fi ${i < parseInt(product.rating) ? 'fi-ss-star' : 'fi-rr-star'}`}></i>
+                            <i key={i} className={`fi ${i < parseInt(product.rating) ? 'fi-ss-star' : 'fi-ts-star'}`}></i>
                         ))}
                     </div>
                     <div className='product_price'>

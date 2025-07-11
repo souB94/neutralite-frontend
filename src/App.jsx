@@ -27,6 +27,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Orders from './pages/Dashboard/Orders';
 import Profile from './pages/Dashboard/Profile';
 
+import SearchPage from './pages/Search/Search';
+
 function App() {
   return (
     <>
@@ -57,6 +59,7 @@ function App() {
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/thankyou" element={<ThankYou />} />
+            <Route path="/search" element={<SearchPage />} />
 
             {/* ✅ Dashboard Layout with Nested Routes */}
             <Route
