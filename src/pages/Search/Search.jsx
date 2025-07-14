@@ -187,7 +187,7 @@ function SearchPage() {
                             {/* No sidebar filters on search results page, directly show products */}
                             <div className="product_listing_block w-full">
                                 <div className='inner_content_wrapper'>
-                                    <div className="product_row_wrapper mt-6 mx-[-20px] flex justify-startflex-wrap">
+                                    <div className="product_row_wrapper mt-6 mx-[-20px] flex justify-start flex-wrap">
                                         {loading ? (
                                             <div className="text-center w-full py-10">
                                                 <p className="text-[22px] font-urbanist text-gray-700">Searching for products...</p>
